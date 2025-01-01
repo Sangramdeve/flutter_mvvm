@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mvvm/core/api/api_services.dart';
-import 'package:mvvm/view-model/test.dart';
-
-import 'core/api/api_state.dart';
+import 'package:mvvm/core/routing/app_router.dart';
+import 'package:mvvm/core/routing/app_routes.dart';
 
 GlobalKey<ScaffoldMessengerState> globalMessengerKey =
     GlobalKey<ScaffoldMessengerState>();
@@ -25,33 +22,10 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: Rdfgnmdf(),
+     initialRoute: RoutesName.loginScreen,
+      onGenerateRoute: Routes.generateRoute,
       navigatorKey: navigatorKey,
       scaffoldMessengerKey: globalMessengerKey,
-    );
-  }
-}
-
-class Rdfgnmdf extends StatelessWidget {
-  Rdfgnmdf({super.key});
-  Test test = Test();
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-
-          Center(
-            child: ElevatedButton(
-                onPressed: () {
-                  test.getData();
-                },
-                child: Text('data')),
-          ),
-        ],
-      ),
     );
   }
 }

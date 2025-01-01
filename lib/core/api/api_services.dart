@@ -123,7 +123,9 @@ class ApiServices extends BaseApiServices {
   dynamic returnResponse(http.Response response) {
     switch (response.statusCode) {
       case 200:
+        return jsonDecode(response.body);
       case 201:
+        return jsonDecode(response.body);
       case 202:
         return jsonDecode(response.body);
       case 204:

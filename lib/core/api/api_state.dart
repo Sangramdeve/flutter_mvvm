@@ -1,12 +1,9 @@
-enum Status {LOADING, COMPLETED, ERROR }
+enum Status {COMPLETED, ERROR }
 
 class ApiState<T> {
   Status status;
   T? data;
   String? message;
-
-
-  ApiState.loading(this.status);
 
   ApiState.completed(this.data) : status = Status.COMPLETED;
 
