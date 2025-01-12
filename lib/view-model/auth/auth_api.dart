@@ -1,17 +1,17 @@
 import 'package:get/get.dart';
-import 'package:mvvm/core/api/api_services.dart';
-import 'package:mvvm/core/constants/api_urls.dart';
-import 'package:mvvm/core/api/api_state.dart';
 
-class AuthController extends GetxController {
-  // Observables for state
-  final isLoading = false.obs;
-  final authResponse = Rx<ApiState?>(null);
-  final errorMessage = ''.obs;
+import '../../core/api/api_services.dart';
+import '../../core/api/api_state.dart';
+import '../../core/constants/api_urls.dart';
 
+mixin AuthApi on GetxController {
   final ApiServices apiServices = ApiServices();
 
   Future<void> signUpWithCred({required Map<String, dynamic> data}) async {
+    final isLoading = false.obs;
+    final authResponse = Rx<ApiState?>(null);
+    final errorMessage = ''.obs;
+
     isLoading(true);
     try {
       final response = await apiServices.postRequest(ApiUrls.signUp, data);
@@ -30,8 +30,11 @@ class AuthController extends GetxController {
     }
   }
 
-  // Login Method
   Future<void> loginWithCred({required Map<String, dynamic> data}) async {
+    final isLoading = false.obs;
+    final authResponse = Rx<ApiState?>(null);
+    final errorMessage = ''.obs;
+
     isLoading(true);  // Set loading state to true
     try {
       final response = await apiServices.postRequest(ApiUrls.login, data);
@@ -50,4 +53,5 @@ class AuthController extends GetxController {
       isLoading(false);
     }
   }
+
 }

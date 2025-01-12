@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mvvm/view-model/auth_controller.dart';
 
 import '../../../core/routing/app_router.dart';
+import '../../../view-model/auth/auth_controller.dart';
 import '../../widgets/text_field.dart';
 
 class Login extends StatefulWidget {

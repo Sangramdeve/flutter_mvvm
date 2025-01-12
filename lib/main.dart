@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mvvm/core/routing/app_router.dart';
 import 'package:mvvm/core/routing/app_routes.dart';
+import 'package:mvvm/temp/bootom.dart';
 
 GlobalKey<ScaffoldMessengerState> globalMessengerKey =
     GlobalKey<ScaffoldMessengerState>();
@@ -22,10 +23,11 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-     initialRoute: RoutesName.loginScreen,
-      onGenerateRoute: Routes.generateRoute,
-      navigatorKey: navigatorKey,
-      scaffoldMessengerKey: globalMessengerKey,
+     // initialRoute: RoutesName.loginScreen,
+     //  onGenerateRoute: Routes.generateRoute,
+     //  navigatorKey: navigatorKey,
+     //  scaffoldMessengerKey: globalMessengerKey,
+      home: const BottomSheetExample(),
     );
   }
 }
