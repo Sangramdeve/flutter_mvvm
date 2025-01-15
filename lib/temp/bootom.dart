@@ -24,6 +24,12 @@ class BottomSheetExample extends StatefulWidget {
 class _BottomSheetExampleState extends State<BottomSheetExample> {
   final ListController listController = Get.put(ListController());
 
+  final List<int> first = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
+  final List<int> second = [1, 2, 3, 4, 5, 6];
+
+  int? st;
+  int? nd;
+
   @override
   void initState() {
     super.initState();
@@ -37,66 +43,83 @@ class _BottomSheetExampleState extends State<BottomSheetExample> {
         title: const Text('Bottom Sheet Example'),
       ),
       body: Center(
-        child: ElevatedButton(
-          onPressed: () => showBottomSheewt(
-            context,
-            widget: layout(),
-          ),
-          child: const Text('Show Bottom Sheet'),
+        child: Column(
+          children: [
+            ElevatedButton(
+              onPressed: () async{
+               final selected = await  showModalBottomSheet(
+                 context: context,
+                 builder: (BuildContext context) {
+                   return layout(first);
+                 },
+               );
+
+               ScaffoldMessenger.of(context)
+                 ..removeCurrentSnackBar()
+                 ..showSnackBar(SnackBar(content: Text('$selected')));
+              },
+              child: Text('Bottom value $st'),
+            ),
+            ElevatedButton(
+              onPressed: () => showBottomSheewt(
+                context,
+                widget: layout(second),
+              ),
+              child: Text(' Bottom value '),
+            ),
+          ],
         ),
       ),
     );
   }
 
-  Widget layout() {
-    bool localSwitchValue = false;
-
-    return StatefulBuilder(
-      builder: (context, setState) {
-        return SingleChildScrollView(
-          child: Container(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  'Bottom Sheet Title',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 8),
-                const Text(
-                  'This is the content of the bottom sheet. You can add any widget here.',
-                ),
-                const SizedBox(height: 16),
-                CustomSwitch(
-                  value: localSwitchValue,
-                  onChanged: (value) {
-                    setState(() {
-                      localSwitchValue = value; // Update local state.
-                    });
-                    listController.filterList(value); // Update the controller.
-                  },
-                ),
-                Obx(() {
-                  final filteredList = listController.filteredList;
-                  return ListView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: filteredList.length,
-                    itemBuilder: (context, index) {
-                      final data = filteredList[index];
-                      return ListTile(
-                        title: Text('$data'),
-                      );
-                    },
-                  );
-                }),
-              ],
-            ),
-          ),
-        );
-      },
+  Widget layout(List item) {
+    return SingleChildScrollView(
+      child: Container(
+        padding: const EdgeInsets.all(16.0),
+        child: ListView.builder(
+          physics: const NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          itemCount: item.length,
+          itemBuilder: (context, index) {
+            final data = item[index];
+            return ListTile(
+              title: Text('$data'),
+              onTap: () {
+                Navigator.pop(context, data);
+              },
+            );
+          },
+        ),
+      ),
     );
   }
+}
 
+class Layout extends StatelessWidget {
+  final List item;
+  const Layout({super.key, required this.item});
+
+  @override
+  Widget build(BuildContext context) {
+    return  SingleChildScrollView(
+      child: Container(
+        padding: const EdgeInsets.all(16.0),
+        child: ListView.builder(
+          physics: const NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          itemCount: item.length,
+          itemBuilder: (context, index) {
+            final data = item[index];
+            return ListTile(
+              title: Text('$data'),
+              onTap: () {
+                Navigator.pop(context, data);
+              },
+            );
+          },
+        ),
+      ),
+    );
+  }
 }
